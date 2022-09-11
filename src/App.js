@@ -1,22 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import ReactDOM from 'react-dom/client';
+import logo from "./logo.svg";
+import "@aws-amplify/ui-react/styles.css";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+import {
+  withAuthenticator,
+  Button,
+  Heading,
+  Image,
+  View,
+  Card,
+} from "@aws-amplify/ui-react";
 
-root.render(<Hello />)
+import Amplify from 'aws-amplify';
+import config from './aws-exports';
+Amplify.configure(config);
 
-function Hello(props) {
-  return <h1>Hello World!</h1>;
-}
-
-function App() {
+function App({ signOut }) {
   return (
-    <div className="App">
-      <h1>Hello World!</h1>
-    </div>
+    <View className="App">
+      <Card>
+        <Image src={logo} className="App-logo" alt="logo" />
+        <Heading level={1}>We now have Auth!</Heading>
+      </Card>
+      <Button onClick={signOut}>Sign Out</Button>
+    </View>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
